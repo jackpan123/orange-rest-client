@@ -1,6 +1,7 @@
 package com.jackpan.orange.client;
 
-import java.nio.channels.Selector;
+import com.jackpan.orange.constant.PluginType;
+
 import java.util.List;
 
 /**
@@ -11,11 +12,16 @@ public class SelectorClient {
 
     private OrangeRestClient orangeRestClient;
 
+    private PluginType pluginType;
+    
     SelectorClient(OrangeRestClient orangeRestClient) {
+
         this.orangeRestClient = orangeRestClient;
     }
 
     List<SelectorInfo> list() {
+
+
         return null;
     }
 }
