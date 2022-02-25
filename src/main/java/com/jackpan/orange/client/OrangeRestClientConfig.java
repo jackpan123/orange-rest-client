@@ -4,6 +4,10 @@ public class OrangeRestClientConfig {
 
     private String serverHost;
 
+    private String name;
+
+    private String password;
+
     public String getServerHost() {
         return serverHost;
     }

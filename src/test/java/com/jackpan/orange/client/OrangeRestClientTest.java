@@ -1,16 +1,26 @@
 package com.jackpan.orange.client;
 
+import com.jackpan.orange.entity.Selector;
 import com.jackpan.orange.response.AcknowledgedResponse;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 public class OrangeRestClientTest {
 
+    private OrangeRestClient orangeRestClient;
 
-    @Test
-    public void jwtAuthPluginTest() {
+    @Before
+    public void initClient() {
         OrangeRestClientConfig config = new OrangeRestClientConfig();
         config.setServerHost("http://192.168.102.33:7777");
-        OrangeRestClient orangeRestClient = new OrangeRestClient(config);
+        this.orangeRestClient = new OrangeRestClient(config);
+    }
+
+
+    //@Test
+    public void jwtAuthPluginTest() {
         // stop plugin
         AcknowledgedResponse stop = orangeRestClient.jwtAuth().plugin().stop();
         if (stop.isAcknowledged()) {
@@ -22,4 +32,17 @@ public class OrangeRestClientTest {
             System.out.println(start.getMsg());
         }
     }
+
+    /**
+     * 测试Orange jwt 选择器接口.
+     * Jwt auth module selector test.
+     */
+    @Test
+    public void jwtAuthSelectorTest() {
+        List<Selector> list = orangeRestClient.jwtAuth().selectors().list();
+        System.out.println();
+
+    }
+
+
 }

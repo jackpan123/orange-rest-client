@@ -1,5 +1,7 @@
 package com.jackpan.orange.response;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * 相应值
  * @author jackpan
@@ -18,6 +20,11 @@ public class AcknowledgedResponse {
      */
     protected boolean success;
 
+    /**
+     * 返回数据
+     */
+    protected JSONObject data;
+
     public final boolean isAcknowledged() {
         return success;
     }
@@ -32,5 +39,13 @@ public class AcknowledgedResponse {
 
     public void setSuccess(Boolean success) {
         this.success = success;
+    }
+
+    public JSONObject getData() {
+        return data;
+    }
+
+    public void setData(JSONObject data) {
+        this.data = data;
     }
 }

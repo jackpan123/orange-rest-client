@@ -34,7 +34,16 @@ public final class HttpResponseConverters {
 
         AcknowledgedResponse acknowledgedResponse = null;
         if (result != null) {
-            acknowledgedResponse = JSONObject.parseObject(result, AcknowledgedResponse.class);
+            JSONObject resultJson = JSONObject.parseObject(result);
+            acknowledgedResponse = new AcknowledgedResponse();
+            Object data = resultJson.get("data");
+            if (data != null) {
+                acknowledgedResponse.setData(resultJson.getJSONObject("data"));
+            }
+
+            if (resultJson.get("success") != null) {
+                acknowledgedResponse.setSuccess(resultJson.getBoolean("success"));
+            }
         }
 
         return acknowledgedResponse;

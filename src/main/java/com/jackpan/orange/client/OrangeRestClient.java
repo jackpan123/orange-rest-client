@@ -5,7 +5,9 @@ import com.jackpan.orange.request.Request;
 import com.jackpan.orange.response.AcknowledgedResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -14,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,15 +47,47 @@ public class OrangeRestClient implements Closeable {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
 
     }
 
+    /**
+     * 内部执行请求的方法
+     * Execute internal request in orange rest client
+     * @param request 请求参数
+     * @return AcknowledgedResponse
+     */
     public AcknowledgedResponse performRequest(Request request) {
         String serverUrl = serverHost + request.getEndpoint();
         AcknowledgedResponse response = null;
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             logger.info("Request server {}", serverUrl);
+            HttpUriRequest httpUriRequest = convertRequest(request, serverUrl);
+            response =  HttpResponseConverters.httpResponse(httpclient.execute(httpUriRequest));
+
+        } catch (IOException e) {
+            logger.error("OrangeRestClient performRequest error: ", e);
+            throw new RuntimeException("OrangeRestClient performRequest error:", e);
+        }
+
+        return response;
+    }
+
+    /**
+     * Request 转换 HttpUriRequest
+     * Request convert to HttpUriRequest
+     * @param request 请求参数
+     * @param serverUrl Orange API URL
+     * @return HttpUriRequest
+     */
+    private HttpUriRequest convertRequest(Request request, String serverUrl) throws UnsupportedEncodingException {
+
+        HttpUriRequest httpUriRequest = null;
+        if ("GET".equals(request.getMethod())) {
+            HttpGet httpGet = new HttpGet(serverUrl);
+            httpGet.setHeader("Content-Type", contentType);
+            httpUriRequest = httpGet;
+        } else if ("POST".equals(request.getMethod())) {
             HttpPost httpPost = new HttpPost(serverUrl);
             httpPost.setHeader("Content-Type", contentType);
             List<NameValuePair> formData = new ArrayList<>();
@@ -61,13 +96,12 @@ public class OrangeRestClient implements Closeable {
             });
             UrlEncodedFormEntity encodedFormEntity = new UrlEncodedFormEntity(formData);
             httpPost.setEntity(encodedFormEntity);
-            response =  HttpResponseConverters.httpResponse(httpclient.execute(httpPost));
-
-        } catch (IOException e) {
-
+            httpUriRequest = httpPost;
+        } else {
+            throw new UnsupportedOperationException("Only support GET or POST Request");
         }
 
-        return response;
+        return httpUriRequest;
 
     }
 }

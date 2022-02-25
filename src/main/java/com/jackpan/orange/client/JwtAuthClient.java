@@ -14,14 +14,15 @@ public class JwtAuthClient {
 
     private PluginClient pluginClient;
 
+    private SelectorClient selectorClient;
     JwtAuthClient(OrangeRestClient orangeRestClient) {
         this.orangeRestClient = orangeRestClient;
-        pluginClient = new PluginClient(orangeRestClient, pluginType);
-
+        this.pluginClient = new PluginClient(orangeRestClient, pluginType);
+        this.selectorClient = new SelectorClient(orangeRestClient, pluginType);
     }
 
     public SelectorClient selectors() {
-        return null;
+        return selectorClient;
     }
 
     public PluginClient plugin() {
