@@ -5,7 +5,7 @@ package com.jackpan.orange.entity;
  * @author jackpan
  * @version v1.0 2021/9/14 11:43
  */
-public class Handle {
+public class SelectorHandle {
 
     private Boolean continueOperation;
 

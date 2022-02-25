@@ -34,7 +34,7 @@ public class SelectorClient {
     SelectorClient(OrangeRestClient orangeRestClient, PluginType pluginType) {
         this.orangeRestClient = orangeRestClient;
         this.pluginType = pluginType;
-        this.listRequest = new Request("GET", "/" + pluginType.getValue() + "/selectors");
+        this.listRequest = new Request("GET", "/" + this.pluginType.getValue() + "/selectors");
     }
 
     public List<Selector> list() {
@@ -47,4 +47,6 @@ public class SelectorClient {
         SelectorData selectorData = data.toJavaObject(SelectorData.class);
         return new ArrayList<>(selectorData.getSelectors().values());
     }
+
+
 }

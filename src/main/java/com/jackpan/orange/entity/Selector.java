@@ -27,7 +27,7 @@ public class Selector {
     /**
      * 处理
      */
-    private Handle handle;
+    private SelectorHandle handle;
 
     /**
      * 是否启用
@@ -63,11 +63,11 @@ public class Selector {
         this.judge = judge;
     }
 
-    public Handle getHandle() {
+    public SelectorHandle getHandle() {
         return handle;
     }
 
-    public void setHandle(Handle handle) {
+    public void setHandle(SelectorHandle handle) {
         this.handle = handle;
     }
 
