@@ -2,6 +2,10 @@ package com.jackpan.orange.client;
 
 import com.jackpan.orange.entity.Selector;
 import com.jackpan.orange.response.AcknowledgedResponse;
+import com.jackpan.orange.rule.RuleCondition;
+import com.jackpan.orange.rule.RuleFactory;
+import com.jackpan.orange.rule.RuleType;
+import com.jackpan.orange.rule.SelectorRule;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,6 +45,9 @@ public class OrangeRestClientTest {
     public void jwtAuthSelectorTest() {
         List<Selector> list = orangeRestClient.jwtAuth().selectors().list();
         System.out.println();
+        SelectorRule selectorRule = RuleFactory.selectorRule()
+                .ruleType(RuleType.SINGLE_CONDITION_MATCH)
+                .conditions(new RuleCondition()).build();
 
     }
 

@@ -11,6 +11,8 @@ public class Condition {
 
     private String operator;
 
+    private String name;
+
     private String value;
 
     public String getType() {
@@ -27,6 +29,14 @@ public class Condition {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getValue() {
