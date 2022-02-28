@@ -2,13 +2,11 @@ package com.jackpan.orange.client;
 
 import com.jackpan.orange.entity.Selector;
 import com.jackpan.orange.response.AcknowledgedResponse;
-import com.jackpan.orange.rule.RuleCondition;
-import com.jackpan.orange.rule.RuleFactory;
-import com.jackpan.orange.rule.RuleType;
-import com.jackpan.orange.rule.SelectorRule;
+import com.jackpan.orange.rule.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrangeRestClientTest {
@@ -43,11 +41,16 @@ public class OrangeRestClientTest {
      */
     @Test
     public void jwtAuthSelectorTest() {
-        List<Selector> list = orangeRestClient.jwtAuth().selectors().list();
+//        List<Selector> list = orangeRestClient.jwtAuth().selectors().list();
+
+        RuleCondition.RuleConditionBuilder builder = RuleCondition.RuleConditionBuilder.builder();
+        List<RuleCondition> ruleConditions = new ArrayList<>();
+        RuleCondition build = builder.conditionType(ConditionType.URI).matchType(MatchType.MATCH).paramValue("").build();
+        ruleConditions.add(build);
         System.out.println();
         SelectorRule selectorRule = RuleFactory.selectorRule()
                 .ruleType(RuleType.SINGLE_CONDITION_MATCH)
-                .conditions(new RuleCondition()).build();
+                .conditions(ruleConditions).build();
 
     }
 

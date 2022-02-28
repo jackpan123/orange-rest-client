@@ -1,19 +1,18 @@
 package com.jackpan.orange.rule;
 
-import java.nio.channels.Selector;
 import java.util.Arrays;
 import java.util.List;
 
 public class SelectorRule {
 
 
-    private RuleType ruleType;
+    private Integer type;
 
-    private List<RuleCondition> conditionList;
+    private List<RuleCondition> conditions;
 
     private SelectorRule(SelectorRuleBuilder builder) {
-        this.ruleType = builder.ruleType;
-        this.conditionList = builder.conditionList;
+        this.type = builder.ruleType.getType();
+        this.conditions = builder.conditionList;
     }
 
 
@@ -41,9 +40,16 @@ public class SelectorRule {
             return this;
         }
 
+        public SelectorRuleBuilder conditions(List<RuleCondition> ruleConditions) {
+            this.conditionList = ruleConditions;
+            return this;
+        }
+
         public SelectorRule build() {
-            SelectorRule selectorRule = new SelectorRule(this);
-            return selectorRule;
+            if (this.ruleType.equals(RuleType.SINGLE_CONDITION_MATCH) && this.conditionList.size() > 1) {
+                throw new IllegalArgumentException("conditionList only have one condition if you choose single condition match rule type");
+            }
+            return new SelectorRule(this);
         }
     }
 
