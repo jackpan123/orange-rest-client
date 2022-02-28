@@ -1,20 +1,38 @@
-package com.jackpan.orange.rule;
+package com.jackpan.orange.entity;
+
+import com.jackpan.orange.constant.RuleType;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class SelectorRule {
 
-
     private Integer type;
 
     private List<RuleCondition> conditions;
+
+    public SelectorRule() {}
 
     private SelectorRule(SelectorRuleBuilder builder) {
         this.type = builder.ruleType.getType();
         this.conditions = builder.conditionList;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public List<RuleCondition> getConditions() {
+        return conditions;
+    }
+
+    public void setConditions(List<RuleCondition> conditions) {
+        this.conditions = conditions;
+    }
 
     public static class SelectorRuleBuilder {
 

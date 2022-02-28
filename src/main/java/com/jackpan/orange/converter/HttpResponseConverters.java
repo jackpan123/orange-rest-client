@@ -44,6 +44,10 @@ public final class HttpResponseConverters {
             if (resultJson.get("success") != null) {
                 acknowledgedResponse.setSuccess(resultJson.getBoolean("success"));
             }
+
+            if (resultJson.get("msg") != null) {
+                acknowledgedResponse.setMsg(resultJson.getString("msg"));
+            }
         }
 
         return acknowledgedResponse;

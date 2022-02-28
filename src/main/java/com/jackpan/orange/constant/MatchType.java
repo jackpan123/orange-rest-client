@@ -1,4 +1,4 @@
-package com.jackpan.orange.rule;
+package com.jackpan.orange.constant;
 
 public enum MatchType {
 

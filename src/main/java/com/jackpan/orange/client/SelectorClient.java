@@ -37,6 +37,10 @@ public class SelectorClient {
         this.listRequest = new Request("GET", "/" + this.pluginType.getValue() + "/selectors");
     }
 
+    /**
+     * 获取选择器的列表
+     * @return List<Selector>
+     */
     public List<Selector> list() {
         AcknowledgedResponse response = orangeRestClient.performRequest(this.listRequest);
         if (!response.isAcknowledged()) {
@@ -47,6 +51,26 @@ public class SelectorClient {
         SelectorData selectorData = data.toJavaObject(SelectorData.class);
         return new ArrayList<>(selectorData.getSelectors().values());
     }
+
+    /**
+     * 创建选择器
+     * @param selector 选择器信息
+     * @return AcknowledgedResponse
+     */
+    public AcknowledgedResponse create(Selector selector) {
+        Request createRequest = this.createSelectorRequest(selector);
+        return orangeRestClient.performRequest(createRequest);
+    }
+
+    private Request createSelectorRequest(Selector selector) {
+        Request request = new Request("POST", "/" + this.pluginType.getValue() + "/selectors");
+        request.addParameter("selector",  JSONObject.toJSONString(selector));
+        return request;
+    }
+
+
+
+
 
 
 }

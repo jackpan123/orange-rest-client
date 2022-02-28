@@ -1,7 +1,8 @@
 package com.jackpan.orange.entity;
 
 
-import java.util.List;
+import com.jackpan.orange.constant.SelectorType;
+
 
 /**
  * @author jackpan
@@ -22,7 +23,7 @@ public class Selector {
     /**
      * 选择器规则
      */
-    private List<Judge> judge;
+    private SelectorRule judge;
 
     /**
      * 处理
@@ -32,12 +33,24 @@ public class Selector {
     /**
      * 是否启用
      */
-    private Boolean enable;
+    private boolean enable;
 
     /**
      * 选择器ID
      */
     private String id;
+
+    public Selector() {
+
+    }
+
+    private Selector(SelectorBuilder builder) {
+        this.name = builder.name;
+        this.type = builder.type.getType();
+        this.judge = builder.rule;
+        this.handle = builder.handle;
+        this.enable = builder.enable;
+    }
 
     public String getName() {
         return name;
@@ -55,11 +68,11 @@ public class Selector {
         this.type = type;
     }
 
-    public List<Judge> getJudge() {
+    public SelectorRule getJudge() {
         return judge;
     }
 
-    public void setJudge(List<Judge> judge) {
+    public void setJudge(SelectorRule judge) {
         this.judge = judge;
     }
 
@@ -86,4 +99,72 @@ public class Selector {
     public void setId(String id) {
         this.id = id;
     }
+
+    public static class SelectorBuilder {
+        /**
+         * 选择器名称
+         */
+        private String name;
+
+        /**
+         * 选择器类型
+         */
+        private SelectorType type;
+
+        /**
+         * 选择器规则
+         */
+        private SelectorRule rule;
+
+        /**
+         * 处理
+         */
+        private SelectorHandle handle;
+
+        /**
+         * 是否启用
+         */
+        private boolean enable = false;
+
+        public static SelectorBuilder builder() {
+            return new SelectorBuilder();
+        }
+
+        private SelectorBuilder() {
+
+        }
+
+        public SelectorBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+
+        public SelectorBuilder type(SelectorType type) {
+            this.type = type;
+            return this;
+        }
+
+        public SelectorBuilder selectorRule(SelectorRule rule) {
+            this.rule = rule;
+            return this;
+        }
+
+        public SelectorBuilder handle(SelectorHandle handle) {
+            this.handle = handle;
+            return this;
+        }
+
+        public SelectorBuilder enable(boolean enable) {
+            this.enable = enable;
+            return this;
+        }
+
+
+        public Selector build() {
+            return new Selector(this);
+        }
+
+    }
+
 }

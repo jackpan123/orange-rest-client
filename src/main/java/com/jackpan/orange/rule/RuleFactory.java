@@ -1,5 +1,7 @@
 package com.jackpan.orange.rule;
 
+import com.jackpan.orange.entity.SelectorRule;
+
 /**
  * 规则工厂
  * @author jackpan
