@@ -49,12 +49,15 @@ public class OrangeRestClientTest {
 
     }
 
+    /**
+     * 测试创建选择器
+     */
     @Test
     public void jwtAuthSelectorCreateTest() {
         // create condition
         RuleCondition.RuleConditionBuilder builder = RuleCondition.RuleConditionBuilder.builder();
         List<RuleCondition> ruleConditions = new ArrayList<>();
-        RuleCondition build = builder.conditionType(ConditionType.URI).matchType(MatchType.MATCH).paramValue("").build();
+        RuleCondition build = builder.conditionType(ConditionType.URI).matchType(MatchType.MATCH).paramValue("/some/api").build();
         ruleConditions.add(build);
 
         // create rule
@@ -65,8 +68,8 @@ public class OrangeRestClientTest {
         SelectorHandle handle = SelectorHandle.SelectorHandleBuilder.builder()
                 .continueOperation(SelectorHandleType.OMIT_SUBSEQUENT_SELECTORS).log(LogType.LOG).build();
 
-        Selector test3 = Selector.SelectorBuilder.builder().name("test3")
-                .type(SelectorType.FULL_TRAFFIC).selectorRule(selectorRule).handle(handle).build();
+        Selector test3 = Selector.SelectorBuilder.builder().name("test4")
+                .type(SelectorType.CUSTOM_TRAFFIC).selectorRule(selectorRule).handle(handle).build();
 
         AcknowledgedResponse response = orangeRestClient.jwtAuth().selectors().create(test3);
         System.out.println(response.getMsg());
