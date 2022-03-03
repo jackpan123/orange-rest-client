@@ -52,7 +52,7 @@ public class OrangeRestClientTest {
     /**
      * 测试创建选择器
      */
-    @Test
+    //@Test
     public void jwtAuthSelectorCreateTest() {
         // create condition
         RuleCondition.RuleConditionBuilder builder = RuleCondition.RuleConditionBuilder.builder();
@@ -76,7 +76,7 @@ public class OrangeRestClientTest {
 
     }
 
-    @Test
+    //@Test
     public void jwtAuthSelectorUpdateTest() {
         List<Selector> list = orangeRestClient.jwtAuth().selectors().list();
         if (list.size() > 0) {
@@ -104,6 +104,17 @@ public class OrangeRestClientTest {
         }
     }
 
-
-
+    /**
+     * 删除选择器
+     */
+    // @Test
+    public void jwtAuthSelectorDeleteTest() {
+        List<Selector> list = orangeRestClient.jwtAuth().selectors().list();
+        if (list.size() > 0) {
+            AcknowledgedResponse delete = orangeRestClient.jwtAuth().selectors().delete(list.get(0).getId());
+            System.out.println(delete.getMsg());
+        }
     }
+
+
+}

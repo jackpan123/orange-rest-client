@@ -1,17 +1,17 @@
 package com.jackpan.orange.client;
 
 import com.jackpan.orange.converter.HttpResponseConverters;
+import com.jackpan.orange.request.HttpDeleteRequest;
 import com.jackpan.orange.request.Request;
 import com.jackpan.orange.response.AcknowledgedResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.*;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,6 +23,7 @@ import java.util.List;
 
 /**
  * Orange rest 客户端。
+ *
  * @author jackpan
  */
 public class OrangeRestClient implements Closeable {
@@ -34,6 +35,7 @@ public class OrangeRestClient implements Closeable {
     private String contentType = "application/x-www-form-urlencoded; charset=UTF-8";
 
     private final JwtAuthClient jwtAuthClient = new JwtAuthClient(this);
+
     public OrangeRestClient(OrangeRestClientConfig restClientConfig) {
         this.serverHost = restClientConfig.getServerHost();
     }
@@ -41,6 +43,7 @@ public class OrangeRestClient implements Closeable {
 
     /**
      * 提供 Jwt Auth模块的客户端
+     *
      * @return
      */
     public JwtAuthClient jwtAuth() {
@@ -55,6 +58,7 @@ public class OrangeRestClient implements Closeable {
     /**
      * 内部执行请求的方法
      * Execute internal request in orange rest client
+     *
      * @param request 请求参数
      * @return AcknowledgedResponse
      */
@@ -64,7 +68,7 @@ public class OrangeRestClient implements Closeable {
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             logger.info("Request server {}", serverUrl);
             HttpUriRequest httpUriRequest = convertRequest(request, serverUrl);
-            response =  HttpResponseConverters.httpResponse(httpclient.execute(httpUriRequest));
+            response = HttpResponseConverters.httpResponse(httpclient.execute(httpUriRequest));
 
         } catch (IOException e) {
             logger.error("OrangeRestClient performRequest error: ", e);
@@ -77,7 +81,8 @@ public class OrangeRestClient implements Closeable {
     /**
      * Request 转换 HttpUriRequest
      * Request convert to HttpUriRequest
-     * @param request 请求参数
+     *
+     * @param request   请求参数
      * @param serverUrl Orange API URL
      * @return HttpUriRequest
      */
@@ -98,18 +103,28 @@ public class OrangeRestClient implements Closeable {
             UrlEncodedFormEntity encodedFormEntity = new UrlEncodedFormEntity(formData);
             httpPost.setEntity(encodedFormEntity);
             httpUriRequest = httpPost;
-        } else if ("PUT".equals(request.getMethod())){
-            HttpPut httpPost = new HttpPut(serverUrl);
-            httpPost.setHeader("Content-Type", contentType);
+        } else if ("PUT".equals(request.getMethod())) {
+            HttpPut httpPut = new HttpPut(serverUrl);
+            httpPut.setHeader("Content-Type", contentType);
             List<NameValuePair> formData = new ArrayList<>();
             request.getParameters().forEach((name, value) -> {
                 formData.add(new BasicNameValuePair(name, value));
             });
             UrlEncodedFormEntity encodedFormEntity = new UrlEncodedFormEntity(formData);
-            httpPost.setEntity(encodedFormEntity);
-            httpUriRequest = httpPost;
+            httpPut.setEntity(encodedFormEntity);
+            httpUriRequest = httpPut;
+        } else if ("DELETE".equals(request.getMethod())) {
+            HttpDeleteRequest httpDelete = new HttpDeleteRequest(serverUrl);
+            httpDelete.setHeader("Content-Type", contentType);
+            List<NameValuePair> formData = new ArrayList<>();
+            request.getParameters().forEach((name, value) -> {
+                formData.add(new BasicNameValuePair(name, value));
+            });
+            UrlEncodedFormEntity encodedFormEntity = new UrlEncodedFormEntity(formData);
+            httpDelete.setEntity(encodedFormEntity);
+            httpUriRequest = httpDelete;
         } else {
-            throw new UnsupportedOperationException("Only support GET or POST Request");
+            throw new UnsupportedOperationException("Only support " + request.getMethod() + " Request");
         }
 
         return httpUriRequest;

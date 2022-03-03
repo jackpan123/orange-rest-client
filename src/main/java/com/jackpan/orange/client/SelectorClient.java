@@ -93,6 +93,29 @@ public class SelectorClient {
     }
 
 
+    /**
+     * 删除选择器信息
+     * @param selectorId 选择器ID
+     * @return AcknowledgedResponse
+     */
+    public AcknowledgedResponse delete(String selectorId) {
+        Request delete = this.deleteSelectorRequest(selectorId);
+        return orangeRestClient.performRequest(delete);
+    }
+
+
+    /**
+     * 删除选择器Request
+     * @param selectorId 选择器信息
+     * @return Request
+     */
+    private Request deleteSelectorRequest(String selectorId) {
+        Request request = new Request("DELETE", "/" + this.pluginType.getValue() + "/selectors");
+        request.addParameter("selector_id",  selectorId);
+        return request;
+    }
+
+
 
 
 
