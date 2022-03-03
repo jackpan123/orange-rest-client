@@ -10,7 +10,7 @@ OrangeRestClientConfig config = new OrangeRestClientConfig();
 config.setServerHost("http://192.168.102.33:7777");
 OrangeRestClient orangeRestClient = new OrangeRestClient(config);
 ```
-Jwt客户端插件操作
+客户端插件操作（Jwt插件为例）
 
 ```java
 // 停止Jwt插件
@@ -26,7 +26,7 @@ if (stop.isAcknowledged()) {
 }
 ```
 
-创建Jwt选择器
+创建选择器（Jwt插件为例）
 
 ```java
 // 创建自定义流量的条件
@@ -51,5 +51,38 @@ Selector test3 = Selector.SelectorBuilder.builder().name("test4")
 // 获取响应值
 AcknowledgedResponse response = orangeRestClient.jwtAuth().selectors().create(test3);
 System.out.println(response.getMsg());
+
+// 更新选择器
+List<Selector> list = orangeRestClient.jwtAuth().selectors().list();
+if (list.size() > 0) {
+    Selector selector = list.get(0);
+    selector.setName("customUpdate");
+    selector.setType(SelectorType.CUSTOM_TRAFFIC.getType());
+
+    // create condition
+    RuleCondition.RuleConditionBuilder builder = RuleCondition.RuleConditionBuilder.builder();
+    List<RuleCondition> ruleConditions = new ArrayList<>();
+    RuleCondition condition1 = builder.conditionType(ConditionType.URI).matchType(MatchType.MATCH).paramValue("/custom/api").build();
+    RuleCondition condition2 = builder.conditionType(ConditionType.HEADER).paramName("customParam").matchType(MatchType.MATCH).paramValue("/custom/api").build();
+    ruleConditions.add(condition1);
+    ruleConditions.add(condition2);
+
+    // create rule
+    SelectorRule selectorRule = RuleFactory.selectorRule()
+      .ruleType(RuleType.AND_MATCH)
+      .conditions(ruleConditions).build();
+
+    selector.setJudge(selectorRule);
+
+    AcknowledgedResponse update = orangeRestClient.jwtAuth().selectors().update(selector);
+    System.out.println();
+}
+
+// 删除选择器
+List<Selector> list = orangeRestClient.jwtAuth().selectors().list();
+if (list.size() > 0) {
+    AcknowledgedResponse delete = orangeRestClient.jwtAuth().selectors().delete(list.get(0).getId());
+    System.out.println(delete.getMsg());
+}
 ```
 
