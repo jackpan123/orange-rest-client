@@ -10,8 +10,6 @@ import org.apache.http.client.methods.*;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,6 +33,7 @@ public class OrangeRestClient implements Closeable {
     private String contentType = "application/x-www-form-urlencoded; charset=UTF-8";
 
     private final JwtAuthClient jwtAuthClient = new JwtAuthClient(this);
+    private final HeadersClient headersClient = new HeadersClient(this);
 
     public OrangeRestClient(OrangeRestClientConfig restClientConfig) {
         this.serverHost = restClientConfig.getServerHost();
@@ -44,10 +43,19 @@ public class OrangeRestClient implements Closeable {
     /**
      * 提供 Jwt Auth模块的客户端
      *
-     * @return
+     * @return 客户端对象
      */
     public JwtAuthClient jwtAuth() {
         return jwtAuthClient;
+    }
+
+    /**
+     * 提供 Headers 模块的客户端
+     *
+     * @return 客户端对象
+     */
+    public HeadersClient headers() {
+        return headersClient;
     }
 
     @Override

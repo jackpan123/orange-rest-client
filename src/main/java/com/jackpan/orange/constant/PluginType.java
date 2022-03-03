@@ -6,6 +6,12 @@ package com.jackpan.orange.constant;
  */
 public enum PluginType {
 
+
+    /**
+     * headers修改
+     */
+    HEADERS("headers"),
+
     /**
      * 监控插件
      */

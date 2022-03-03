@@ -14,14 +14,7 @@ public class JwtAuthClient extends AbstractClient{
         super(orangeRestClient, PluginType.JWT_AUTH);
     }
 
-    public SelectorClient selectors() {
-        return selectorClient;
-    }
-
     public RuleClient rules(String selectorId) {
         return RuleClient.getInstance(orangeRestClient, pluginType, selectorId);
-    }
-    public PluginClient plugin() {
-        return pluginClient;
     }
 }
