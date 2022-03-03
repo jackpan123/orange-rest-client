@@ -18,7 +18,7 @@ public class SelectorHandle {
     /**
      * 默认开启
      */
-    private boolean log = false;
+    private boolean log = true;
 
     public SelectorHandle() {
 

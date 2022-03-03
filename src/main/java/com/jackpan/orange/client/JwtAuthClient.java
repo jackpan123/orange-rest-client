@@ -25,6 +25,9 @@ public class JwtAuthClient {
         return selectorClient;
     }
 
+    public RuleClient rules(String selectorId) {
+        return RuleClient.getInstance(orangeRestClient, pluginType, selectorId);
+    }
     public PluginClient plugin() {
         return pluginClient;
     }

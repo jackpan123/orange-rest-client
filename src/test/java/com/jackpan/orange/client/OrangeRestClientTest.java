@@ -1,10 +1,10 @@
 package com.jackpan.orange.client;
 
 import com.jackpan.orange.constant.*;
-import com.jackpan.orange.entity.RuleCondition;
-import com.jackpan.orange.entity.Selector;
-import com.jackpan.orange.entity.SelectorHandle;
-import com.jackpan.orange.entity.SelectorRule;
+import com.jackpan.orange.entity.*;
+import com.jackpan.orange.entity.jwt.JwtCredentials;
+import com.jackpan.orange.entity.jwt.JwtRule;
+import com.jackpan.orange.entity.jwt.JwtRuleHandle;
 import com.jackpan.orange.response.AcknowledgedResponse;
 import com.jackpan.orange.rule.*;
 import org.junit.Before;
@@ -114,6 +114,35 @@ public class OrangeRestClientTest {
             AcknowledgedResponse delete = orangeRestClient.jwtAuth().selectors().delete(list.get(0).getId());
             System.out.println(delete.getMsg());
         }
+    }
+
+    @Test
+    public void jwtAuthRulesCreateTest() {
+
+        // create condition
+        RuleCondition.RuleConditionBuilder builder = RuleCondition.RuleConditionBuilder.builder();
+        List<RuleCondition> ruleConditions = new ArrayList<>();
+        RuleCondition condition1 = builder.conditionType(ConditionType.URI).matchType(MatchType.MATCH).paramValue("/custom/api").build();
+        RuleCondition condition2 = builder.conditionType(ConditionType.HEADER).paramName("customParam").matchType(MatchType.MATCH).paramValue("/custom/api").build();
+        ruleConditions.add(condition1);
+        ruleConditions.add(condition2);
+
+        // create rule
+        SelectorRule selectorRule = RuleFactory.selectorRule()
+                .ruleType(RuleType.AND_MATCH)
+                .conditions(ruleConditions).build();
+
+
+        Payload build = Payload.builder().key("aaa").target_key("bb").build();
+        List<Payload> payloads = new ArrayList<>();
+        payloads.add(build);
+
+        JwtCredentials jwtCredentials = JwtCredentials.builder().payload(payloads).secret("ccc").build();
+
+        JwtRuleHandle handle = JwtRuleHandle.builder().credentials(jwtCredentials).build();
+        JwtRule testRule = JwtRule.builder().name("testRule").judge(selectorRule).handle(handle).build();
+        AcknowledgedResponse response = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").create(testRule);
+        System.out.println();
     }
 
 
