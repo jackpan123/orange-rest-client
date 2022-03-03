@@ -68,6 +68,30 @@ public class SelectorClient {
         return request;
     }
 
+    /**
+     * 更新选择器信息
+     * @param selector 选择器信息，需要包含选择器ID
+     * @return AcknowledgedResponse
+     */
+    public AcknowledgedResponse update(Selector selector) {
+        if (selector.getId() == null || "".equals(selector.getId())) {
+            throw new IllegalArgumentException("Selector id must not be null");
+        }
+        Request update = this.updateSelectorRequest(selector);
+        return orangeRestClient.performRequest(update);
+    }
+
+    /**
+     * 更新选择器Request
+     * @param selector 选择器信息
+     * @return Request
+     */
+    private Request updateSelectorRequest(Selector selector) {
+        Request request = new Request("PUT", "/" + this.pluginType.getValue() + "/selectors");
+        request.addParameter("selector",  JSONObject.toJSONString(selector));
+        return request;
+    }
+
 
 
 

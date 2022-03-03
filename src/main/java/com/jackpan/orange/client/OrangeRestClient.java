@@ -7,6 +7,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -89,6 +90,16 @@ public class OrangeRestClient implements Closeable {
             httpUriRequest = httpGet;
         } else if ("POST".equals(request.getMethod())) {
             HttpPost httpPost = new HttpPost(serverUrl);
+            httpPost.setHeader("Content-Type", contentType);
+            List<NameValuePair> formData = new ArrayList<>();
+            request.getParameters().forEach((name, value) -> {
+                formData.add(new BasicNameValuePair(name, value));
+            });
+            UrlEncodedFormEntity encodedFormEntity = new UrlEncodedFormEntity(formData);
+            httpPost.setEntity(encodedFormEntity);
+            httpUriRequest = httpPost;
+        } else if ("PUT".equals(request.getMethod())){
+            HttpPut httpPost = new HttpPut(serverUrl);
             httpPost.setHeader("Content-Type", contentType);
             List<NameValuePair> formData = new ArrayList<>();
             request.getParameters().forEach((name, value) -> {

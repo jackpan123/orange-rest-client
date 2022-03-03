@@ -76,5 +76,34 @@ public class OrangeRestClientTest {
 
     }
 
+    @Test
+    public void jwtAuthSelectorUpdateTest() {
+        List<Selector> list = orangeRestClient.jwtAuth().selectors().list();
+        if (list.size() > 0) {
+            Selector selector = list.get(0);
+            selector.setName("customUpdate");
+            selector.setType(SelectorType.CUSTOM_TRAFFIC.getType());
 
-}
+            // create condition
+            RuleCondition.RuleConditionBuilder builder = RuleCondition.RuleConditionBuilder.builder();
+            List<RuleCondition> ruleConditions = new ArrayList<>();
+            RuleCondition condition1 = builder.conditionType(ConditionType.URI).matchType(MatchType.MATCH).paramValue("/custom/api").build();
+            RuleCondition condition2 = builder.conditionType(ConditionType.HEADER).paramName("customParam").matchType(MatchType.MATCH).paramValue("/custom/api").build();
+            ruleConditions.add(condition1);
+            ruleConditions.add(condition2);
+
+            // create rule
+            SelectorRule selectorRule = RuleFactory.selectorRule()
+                    .ruleType(RuleType.AND_MATCH)
+                    .conditions(ruleConditions).build();
+
+            selector.setJudge(selectorRule);
+
+            AcknowledgedResponse update = orangeRestClient.jwtAuth().selectors().update(selector);
+            System.out.println();
+        }
+    }
+
+
+
+    }
