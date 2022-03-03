@@ -6,19 +6,12 @@ import com.jackpan.orange.constant.PluginType;
  * Jwt 验证客户端。
  * @author jackpan
  */
-public class JwtAuthClient {
-
-    private OrangeRestClient orangeRestClient;
+public class JwtAuthClient extends AbstractClient{
 
     private final PluginType pluginType = PluginType.JWT_AUTH;
 
-    private PluginClient pluginClient;
-
-    private SelectorClient selectorClient;
     JwtAuthClient(OrangeRestClient orangeRestClient) {
-        this.orangeRestClient = orangeRestClient;
-        this.pluginClient = new PluginClient(orangeRestClient, pluginType);
-        this.selectorClient = new SelectorClient(orangeRestClient, pluginType);
+        super(orangeRestClient, PluginType.JWT_AUTH);
     }
 
     public SelectorClient selectors() {

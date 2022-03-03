@@ -13,7 +13,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrangeRestClientTest {
+public class JwtClientTest {
 
     private OrangeRestClient orangeRestClient;
 
@@ -43,9 +43,10 @@ public class OrangeRestClientTest {
      * 测试Orange jwt 选择器接口.
      * Jwt auth module selector test.
      */
-    // @Test
+    @Test
     public void jwtAuthSelectorListTest() {
         List<Selector> list = orangeRestClient.jwtAuth().selectors().list();
+        System.out.println();
 
     }
 
