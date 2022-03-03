@@ -165,6 +165,17 @@ public class OrangeRestClientTest {
     }
 
 
+    // @Test
+    public void jwtAuthRuleDeleteTest() {
+        List<JwtRule> list = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").list();
+        if (list.size() > 0) {
+            AcknowledgedResponse delete = orangeRestClient.jwtAuth()
+                    .rules("e2643937-f9be-4ee9-bda3-a931903a252b").delete(list.get(0).getId());
+            System.out.println(delete.getMsg());
+        }
+    }
+
+
 
 
 }
