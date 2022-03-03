@@ -60,5 +60,17 @@ public class RuleClient {
         return request;
     }
 
-    
+
+    public AcknowledgedResponse update(JwtRule rule) {
+        Request request = this.updateRuleRequest(rule);
+        return orangeRestClient.performRequest(request);
+    }
+
+    private Request updateRuleRequest(JwtRule rule) {
+        Request request = new Request("PUT", "/" +
+                this.pluginType.getValue() + "/selectors/" + this.selectorId + "/rules");
+        request.addParameter("rule",  JSONObject.toJSONString(rule));
+        return request;
+    }
+
 }

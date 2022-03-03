@@ -146,10 +146,25 @@ public class OrangeRestClientTest {
     }
 
 
-    @Test
+    // @Test
     public void jwtAuthRulesListTest() {
         List<JwtRule> list = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").list();
         System.out.println();
     }
+
+    // @Test
+    public void jwtAuthRulesUpdateTest() {
+        List<JwtRule> list = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").list();
+        if (list.size() > 0) {
+            JwtRule rule = list.get(0);
+            rule.setName("updateTest");
+            AcknowledgedResponse update = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").update(rule);
+            System.out.println();
+
+        }
+    }
+
+
+
 
 }
