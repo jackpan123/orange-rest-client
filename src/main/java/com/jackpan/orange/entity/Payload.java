@@ -1,5 +1,7 @@
 package com.jackpan.orange.entity;
 
+import com.jackpan.orange.constant.PayloadType;
+
 /**
  * Payload 参数
  * @author jackpan
@@ -50,15 +52,15 @@ public class Payload {
     }
 
     public static class PayloadBuilder {
-        private int type;
+        private int type = PayloadType.HEADER.getType();
         private String key;
         private String target_key;
 
         PayloadBuilder() {
         }
 
-        public Payload.PayloadBuilder type(final int type) {
-            this.type = type;
+        public Payload.PayloadBuilder type(PayloadType type) {
+            this.type = type.getType();
             return this;
         }
 

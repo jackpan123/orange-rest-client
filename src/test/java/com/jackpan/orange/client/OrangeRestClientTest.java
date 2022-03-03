@@ -116,7 +116,7 @@ public class OrangeRestClientTest {
         }
     }
 
-    @Test
+    //@Test
     public void jwtAuthRulesCreateTest() {
 
         // create condition
@@ -145,5 +145,11 @@ public class OrangeRestClientTest {
         System.out.println();
     }
 
+
+    @Test
+    public void jwtAuthRulesListTest() {
+        List<JwtRule> list = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").list();
+        System.out.println();
+    }
 
 }
