@@ -4,13 +4,14 @@
 
 ## 快速入门
 
-初始化客户端
+### 初始化客户端
+
 ```java
 OrangeRestClientConfig config = new OrangeRestClientConfig();
 config.setServerHost("http://192.168.102.33:7777");
 OrangeRestClient orangeRestClient = new OrangeRestClient(config);
 ```
-客户端插件操作（Jwt插件为例）
+### 客户端插件操作（Jwt插件为例）
 
 ```java
 // 停止Jwt插件
@@ -26,7 +27,7 @@ if (stop.isAcknowledged()) {
 }
 ```
 
-创建选择器（Jwt插件为例）
+### 选择器操作说明（Jwt插件为例）
 
 ```java
 // 创建自定义流量的条件
@@ -84,5 +85,56 @@ if (list.size() > 0) {
     AcknowledgedResponse delete = orangeRestClient.jwtAuth().selectors().delete(list.get(0).getId());
     System.out.println(delete.getMsg());
 }
+```
+
+### 规则操作说明
+
+```java
+// 创建选择器下的规则
+RuleCondition.RuleConditionBuilder builder = RuleCondition.RuleConditionBuilder.builder();
+List<RuleCondition> ruleConditions = new ArrayList<>();
+RuleCondition condition1 = builder.conditionType(ConditionType.URI).matchType(MatchType.MATCH).paramValue("/custom/api").build();
+RuleCondition condition2 = builder.conditionType(ConditionType.HEADER).paramName("customParam").matchType(MatchType.MATCH).paramValue("/custom/api").build();
+ruleConditions.add(condition1);
+ruleConditions.add(condition2);
+
+// create rule
+SelectorRule selectorRule = RuleFactory.selectorRule()
+  .ruleType(RuleType.AND_MATCH)
+  .conditions(ruleConditions).build();
+
+
+Payload build = Payload.builder().key("aaa").target_key("bb").build();
+List<Payload> payloads = new ArrayList<>();
+payloads.add(build);
+
+JwtCredentials jwtCredentials = JwtCredentials.builder().payload(payloads).secret("ccc").build();
+
+JwtRuleHandle handle = JwtRuleHandle.builder().credentials(jwtCredentials).build();
+JwtRule testRule = JwtRule.builder().name("testRule").judge(selectorRule).handle(handle).build();
+AcknowledgedResponse response = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").create(testRule);
+System.out.println();
+
+// 更新选择器下的规则
+List<JwtRule> list = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").list();
+if (list.size() > 0) {
+    JwtRule rule = list.get(0);
+    rule.setName("updateTest");
+    AcknowledgedResponse update = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").update(rule);
+    System.out.println();
+
+}
+
+// 删除选择器下的规则
+List<JwtRule> list = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").list();
+if (list.size() > 0) {
+    AcknowledgedResponse delete = orangeRestClient.jwtAuth()
+      .rules("e2643937-f9be-4ee9-bda3-a931903a252b").delete(list.get(0).getId());
+    System.out.println(delete.getMsg());
+}
+
+// 获取选择器下的列表
+List<JwtRule> list = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").list();
+System.out.println();
 ```
 

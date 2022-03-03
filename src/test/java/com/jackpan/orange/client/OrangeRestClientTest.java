@@ -116,7 +116,7 @@ public class OrangeRestClientTest {
         }
     }
 
-    
+
     //@Test
     public void jwtAuthRulesCreateTest() {
 
