@@ -85,6 +85,9 @@ if (list.size() > 0) {
     AcknowledgedResponse delete = orangeRestClient.jwtAuth().selectors().delete(list.get(0).getId());
     System.out.println(delete.getMsg());
 }
+
+// 获取选择器列表
+List<Selector> list = orangeRestClient.jwtAuth().selectors().list();
 ```
 
 ### 规则操作说明
