@@ -34,6 +34,7 @@ public class OrangeRestClient implements Closeable {
 
     private final JwtAuthClient jwtAuthClient = new JwtAuthClient(this);
     private final HeadersClient headersClient = new HeadersClient(this);
+    private final MonitorClient monitorClient = new MonitorClient(this);
 
     public OrangeRestClient(OrangeRestClientConfig restClientConfig) {
         this.serverHost = restClientConfig.getServerHost();
@@ -56,6 +57,15 @@ public class OrangeRestClient implements Closeable {
      */
     public HeadersClient headers() {
         return headersClient;
+    }
+
+    /**
+     * 提供 Headers 模块的客户端
+     *
+     * @return 客户端对象
+     */
+    public MonitorClient monitor() {
+        return monitorClient;
     }
 
     @Override
