@@ -43,6 +43,7 @@ public class OrangeRestClient implements Closeable {
     private final SignatureAuthClient signatureAuthClient = new SignatureAuthClient(this);
     private final RateLimitingClient rateLimitingClient = new RateLimitingClient(this);
     private final PropertyRateLimitingClient propertyRateLimitingClient = new PropertyRateLimitingClient(this);
+    private final WafClient wafClient = new WafClient(this);
 
     public OrangeRestClient(OrangeRestClientConfig restClientConfig) {
         this.serverHost = restClientConfig.getServerHost();
@@ -147,6 +148,15 @@ public class OrangeRestClient implements Closeable {
      */
     public PropertyRateLimitingClient propertyRateLimiting() {
         return propertyRateLimitingClient;
+    }
+
+    /**
+     * 提供 WAF 模块的客户端
+     *
+     * @return 客户端对象
+     */
+    public WafClient waf() {
+        return wafClient;
     }
 
     @Override
