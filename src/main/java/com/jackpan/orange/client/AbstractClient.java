@@ -2,6 +2,9 @@ package com.jackpan.orange.client;
 
 import com.jackpan.orange.constant.PluginType;
 
+/**
+ * 默认的抽象父类，提供通用的方法
+ */
 public abstract class AbstractClient {
 
     protected OrangeRestClient orangeRestClient;
