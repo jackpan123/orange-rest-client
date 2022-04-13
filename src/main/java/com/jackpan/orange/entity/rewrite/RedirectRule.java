@@ -6,7 +6,7 @@ import com.jackpan.orange.entity.SelectorRule;
  * 重定向验证规则
  * @author jackpan
  */
-public class RewriteRule {
+public class RedirectRule {
 
     /**
      * 选择器名称
@@ -26,7 +26,7 @@ public class RewriteRule {
     /**
      * 处理
      */
-    private RewriteRuleHandle handle;
+    private RedirectRuleHandle handle;
 
     /**
      * 是否启用

@@ -1,10 +1,12 @@
 package com.jackpan.orange.client;
 
 import com.jackpan.orange.constant.*;
-import com.jackpan.orange.entity.RuleCondition;
-import com.jackpan.orange.entity.Selector;
-import com.jackpan.orange.entity.SelectorHandle;
-import com.jackpan.orange.entity.SelectorRule;
+import com.jackpan.orange.entity.*;
+import com.jackpan.orange.entity.jwt.JwtRule;
+import com.jackpan.orange.entity.jwt.JwtRuleHandle;
+import com.jackpan.orange.entity.rewrite.ParamExtractions;
+import com.jackpan.orange.entity.rewrite.ParamExtractor;
+import com.jackpan.orange.entity.rewrite.RedirectRuleHandle;
 import com.jackpan.orange.response.AcknowledgedResponse;
 import com.jackpan.orange.rule.RuleFactory;
 import org.junit.Before;
@@ -118,5 +120,8 @@ public class RewriteClientTest {
             System.out.println(delete.getMsg());
         }
     }
+
+
+
 
 }

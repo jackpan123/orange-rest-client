@@ -5,6 +5,11 @@ import com.jackpan.orange.entity.RuleCondition;
 import com.jackpan.orange.entity.Selector;
 import com.jackpan.orange.entity.SelectorHandle;
 import com.jackpan.orange.entity.SelectorRule;
+import com.jackpan.orange.entity.jwt.JwtRule;
+import com.jackpan.orange.entity.jwt.JwtRuleHandle;
+import com.jackpan.orange.entity.rewrite.ParamExtractions;
+import com.jackpan.orange.entity.rewrite.ParamExtractor;
+import com.jackpan.orange.entity.rewrite.RedirectRuleHandle;
 import com.jackpan.orange.response.AcknowledgedResponse;
 import com.jackpan.orange.rule.RuleFactory;
 import org.junit.Before;
@@ -115,6 +120,69 @@ public class RedirectClientTest {
         List<Selector> list = orangeRestClient.redirect().selectors().list();
         if (list.size() > 0) {
             AcknowledgedResponse delete = orangeRestClient.redirect().selectors().delete(list.get(0).getId());
+            System.out.println(delete.getMsg());
+        }
+    }
+
+    @Test
+    public void rewriteRulesCreateTest() {
+
+        // create condition
+        RuleCondition.RuleConditionBuilder builder = RuleCondition.RuleConditionBuilder.builder();
+        List<RuleCondition> ruleConditions = new ArrayList<>();
+        RuleCondition condition1 = builder.conditionType(ConditionType.URI).matchType(MatchType.MATCH).paramValue("/custom/api").build();
+        RuleCondition condition2 = builder.conditionType(ConditionType.HEADER).paramName("customParam").matchType(MatchType.MATCH).paramValue("/custom/api").build();
+        ruleConditions.add(condition1);
+        ruleConditions.add(condition2);
+
+        // create rule
+        SelectorRule selectorRule = RuleFactory.selectorRule()
+                .ruleType(RuleType.AND_MATCH)
+                .conditions(ruleConditions).build();
+
+
+        ParamExtractions build = ParamExtractions.builder().name("1").type(VariableMatchType.COOKIE).build();
+        List<ParamExtractions> paramExtractions = new ArrayList<>();
+        paramExtractions.add(build);
+
+        ParamExtractor extractor = ParamExtractor.builder().extractions(paramExtractions).type(VariableExtractionType.INDEX).build();
+
+        RedirectRuleHandle handle = RedirectRuleHandle.builder().url_tmpl("/api/a").trim_qs(TrimQueryType.CLEAN).redirect_status(RedirectStatus.STATUS301).log(LogType.LOG).build();
+
+//        RedirectRule
+//
+//        JwtRuleHandle handle = JwtRuleHandle.builder().credentials(jwtCredentials).build();
+//        JwtRule testRule = JwtRule.builder().name("testRule").judge(selectorRule).handle(handle).build();
+//        AcknowledgedResponse response = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").create(testRule);
+//        System.out.println();
+    }
+
+
+    @Test
+    public void jwtAuthRulesListTest() {
+        List<JwtRule> list = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").list();
+        System.out.println();
+    }
+
+    // @Test
+    public void jwtAuthRulesUpdateTest() {
+        List<JwtRule> list = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").list();
+        if (list.size() > 0) {
+            JwtRule rule = list.get(0);
+            rule.setName("updateTest");
+            AcknowledgedResponse update = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").update(rule);
+            System.out.println();
+
+        }
+    }
+
+
+    // @Test
+    public void jwtAuthRuleDeleteTest() {
+        List<JwtRule> list = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").list();
+        if (list.size() > 0) {
+            AcknowledgedResponse delete = orangeRestClient.jwtAuth()
+                    .rules("e2643937-f9be-4ee9-bda3-a931903a252b").delete(list.get(0).getId());
             System.out.println(delete.getMsg());
         }
     }
