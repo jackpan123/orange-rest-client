@@ -37,6 +37,7 @@ public class OrangeRestClient implements Closeable {
     private final MonitorClient monitorClient = new MonitorClient(this);
     private final RedirectClient redirectClient = new RedirectClient(this);
     private final RewriteClient rewriteClient = new RewriteClient(this);
+    private final KeyAuthClient keyAuthClient = new KeyAuthClient(this);
 
     public OrangeRestClient(OrangeRestClientConfig restClientConfig) {
         this.serverHost = restClientConfig.getServerHost();
@@ -86,6 +87,16 @@ public class OrangeRestClient implements Closeable {
      */
     public RewriteClient rewrite() {
         return rewriteClient;
+    }
+
+
+    /**
+     * 提供 key auth 模块的客户端
+     *
+     * @return 客户端对象
+     */
+    public KeyAuthClient keyAuth() {
+        return keyAuthClient;
     }
 
     @Override
