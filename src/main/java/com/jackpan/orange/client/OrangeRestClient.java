@@ -42,6 +42,7 @@ public class OrangeRestClient implements Closeable {
     private final HmacAuthClient hmacAuthClient = new HmacAuthClient(this);
     private final SignatureAuthClient signatureAuthClient = new SignatureAuthClient(this);
     private final RateLimitingClient rateLimitingClient = new RateLimitingClient(this);
+    private final PropertyRateLimitingClient propertyRateLimitingClient = new PropertyRateLimitingClient(this);
 
     public OrangeRestClient(OrangeRestClientConfig restClientConfig) {
         this.serverHost = restClientConfig.getServerHost();
@@ -137,6 +138,15 @@ public class OrangeRestClient implements Closeable {
      */
     public RateLimitingClient rateLimiting() {
         return rateLimitingClient;
+    }
+
+    /**
+     * 提供 Property Rate Limiting 模块的客户端
+     *
+     * @return 客户端对象
+     */
+    public PropertyRateLimitingClient propertyRateLimiting() {
+        return propertyRateLimitingClient;
     }
 
     @Override
