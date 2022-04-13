@@ -36,6 +36,7 @@ public class OrangeRestClient implements Closeable {
     private final HeadersClient headersClient = new HeadersClient(this);
     private final MonitorClient monitorClient = new MonitorClient(this);
     private final RedirectClient redirectClient = new RedirectClient(this);
+    private final RewriteClient rewriteClient = new RewriteClient(this);
 
     public OrangeRestClient(OrangeRestClientConfig restClientConfig) {
         this.serverHost = restClientConfig.getServerHost();
@@ -76,6 +77,15 @@ public class OrangeRestClient implements Closeable {
      */
     public RedirectClient redirect() {
         return redirectClient;
+    }
+
+    /**
+     * 提供 Rewrite 模块的客户端
+     *
+     * @return 客户端对象
+     */
+    public RewriteClient rewrite() {
+        return rewriteClient;
     }
 
     @Override
