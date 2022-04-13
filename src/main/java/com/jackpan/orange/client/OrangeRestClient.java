@@ -39,6 +39,7 @@ public class OrangeRestClient implements Closeable {
     private final RewriteClient rewriteClient = new RewriteClient(this);
     private final KeyAuthClient keyAuthClient = new KeyAuthClient(this);
     private final BasicAuthClient basicAuthClient = new BasicAuthClient(this);
+    private final HmacAuthClient hmacAuthClient = new HmacAuthClient(this);
 
     public OrangeRestClient(OrangeRestClientConfig restClientConfig) {
         this.serverHost = restClientConfig.getServerHost();
@@ -107,6 +108,15 @@ public class OrangeRestClient implements Closeable {
      */
     public BasicAuthClient basicAuth() {
         return basicAuthClient;
+    }
+
+    /**
+     * 提供 hmac auth 模块的客户端
+     *
+     * @return 客户端对象
+     */
+    public HmacAuthClient hmacAuth() {
+        return hmacAuthClient;
     }
 
     @Override

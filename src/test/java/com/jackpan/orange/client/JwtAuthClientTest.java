@@ -13,7 +13,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JwtClientTest {
+public class JwtAuthClientTest {
 
     private OrangeRestClient orangeRestClient;
 

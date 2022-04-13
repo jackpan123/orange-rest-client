@@ -33,6 +33,10 @@ public enum PluginType {
      */
     JWT_AUTH("jwt_auth"),
     /**
+     * 基础认证插件
+     */
+    HMAC_AUTH("hmac_auth"),
+    /**
      * 代理分流插件
      */
     DIVIDE("divide"),
