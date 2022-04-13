@@ -1,6 +1,7 @@
 package com.jackpan.orange.client;
 
 import com.jackpan.orange.constant.PluginType;
+import com.jackpan.orange.entity.jwt.JwtRule;
 
 /**
  * Jwt 验证客户端。
@@ -14,7 +15,7 @@ public class JwtAuthClient extends AbstractClient{
         super(orangeRestClient, PluginType.JWT_AUTH);
     }
 
-    public RuleClient rules(String selectorId) {
-        return RuleClient.getInstance(orangeRestClient, pluginType, selectorId);
+    public RuleClient<JwtRule> rules(String selectorId) {
+        return new JwtRuleClient(orangeRestClient, pluginType, selectorId);
     }
 }
