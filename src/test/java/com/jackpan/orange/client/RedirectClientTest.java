@@ -6,10 +6,10 @@ import com.jackpan.orange.entity.Selector;
 import com.jackpan.orange.entity.SelectorHandle;
 import com.jackpan.orange.entity.SelectorRule;
 import com.jackpan.orange.entity.jwt.JwtRule;
-import com.jackpan.orange.entity.jwt.JwtRuleHandle;
-import com.jackpan.orange.entity.rewrite.ParamExtractions;
-import com.jackpan.orange.entity.rewrite.ParamExtractor;
-import com.jackpan.orange.entity.rewrite.RedirectRuleHandle;
+import com.jackpan.orange.entity.redirect.ParamExtractions;
+import com.jackpan.orange.entity.redirect.ParamExtractor;
+import com.jackpan.orange.entity.redirect.RedirectRule;
+import com.jackpan.orange.entity.redirect.RedirectRuleHandle;
 import com.jackpan.orange.response.AcknowledgedResponse;
 import com.jackpan.orange.rule.RuleFactory;
 import org.junit.Before;
@@ -125,7 +125,7 @@ public class RedirectClientTest {
     }
 
     @Test
-    public void rewriteRulesCreateTest() {
+    public void redirectRulesCreateTest() {
 
         // create condition
         RuleCondition.RuleConditionBuilder builder = RuleCondition.RuleConditionBuilder.builder();
@@ -149,12 +149,10 @@ public class RedirectClientTest {
 
         RedirectRuleHandle handle = RedirectRuleHandle.builder().url_tmpl("/api/a").trim_qs(TrimQueryType.CLEAN).redirect_status(RedirectStatus.STATUS301).log(LogType.LOG).build();
 
-//        RedirectRule
-//
-//        JwtRuleHandle handle = JwtRuleHandle.builder().credentials(jwtCredentials).build();
-//        JwtRule testRule = JwtRule.builder().name("testRule").judge(selectorRule).handle(handle).build();
-//        AcknowledgedResponse response = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").create(testRule);
-//        System.out.println();
+        RedirectRule.RedirectRuleBuilder test = RedirectRule.builder().name("test").judge(selectorRule).extractor(extractor).handle(handle).enable(EnableType.DISABLE);
+
+        AcknowledgedResponse response = orangeRestClient.redirect().rules("d08abe01-cfe0-43ec-ad69-f54d8d741f95").create(test.build());
+        System.out.println(response.getMsg());
     }
 
 

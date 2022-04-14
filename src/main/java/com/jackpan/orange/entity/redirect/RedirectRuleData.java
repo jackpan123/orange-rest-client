@@ -1,4 +1,4 @@
-package com.jackpan.orange.entity.rewrite;
+package com.jackpan.orange.entity.redirect;
 
 
 import java.util.List;

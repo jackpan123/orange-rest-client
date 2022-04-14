@@ -2,8 +2,8 @@ package com.jackpan.orange.client;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jackpan.orange.constant.PluginType;
-import com.jackpan.orange.entity.rewrite.RedirectRule;
-import com.jackpan.orange.entity.rewrite.RedirectRuleData;
+import com.jackpan.orange.entity.redirect.RedirectRule;
+import com.jackpan.orange.entity.redirect.RedirectRuleData;
 import com.jackpan.orange.request.Request;
 import com.jackpan.orange.response.AcknowledgedResponse;
 

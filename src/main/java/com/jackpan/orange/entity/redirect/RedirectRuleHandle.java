@@ -1,11 +1,10 @@
-package com.jackpan.orange.entity.rewrite;
+package com.jackpan.orange.entity.redirect;
 
 import com.jackpan.orange.constant.LogType;
 import com.jackpan.orange.constant.RedirectStatus;
 import com.jackpan.orange.constant.TrimQueryType;
 import lombok.Builder;
 
-@Builder
 public class RedirectRuleHandle {
 
     private String url_tmpl;

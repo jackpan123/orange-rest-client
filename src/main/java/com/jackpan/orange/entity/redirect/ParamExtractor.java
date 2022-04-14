@@ -1,4 +1,4 @@
-package com.jackpan.orange.entity.rewrite;
+package com.jackpan.orange.entity.redirect;
 
 import com.jackpan.orange.constant.VariableExtractionType;
 import lombok.Builder;

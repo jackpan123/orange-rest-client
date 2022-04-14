@@ -1,6 +1,7 @@
 package com.jackpan.orange.entity;
 
 
+import com.jackpan.orange.constant.EnableType;
 import com.jackpan.orange.constant.SelectorType;
 
 
@@ -33,7 +34,7 @@ public class Selector {
     /**
      * 是否启用
      */
-    private boolean enable;
+    private boolean enable = true;
 
     /**
      * 选择器ID
@@ -49,7 +50,7 @@ public class Selector {
         this.type = builder.type.getType();
         this.judge = builder.rule;
         this.handle = builder.handle;
-        this.enable = builder.enable;
+        this.enable = builder.enable.getFlag();
     }
 
     public String getName() {
@@ -124,7 +125,7 @@ public class Selector {
         /**
          * 是否启用
          */
-        private boolean enable = false;
+        private EnableType enable;
 
         public static SelectorBuilder builder() {
             return new SelectorBuilder();
@@ -155,7 +156,7 @@ public class Selector {
             return this;
         }
 
-        public SelectorBuilder enable(boolean enable) {
+        public SelectorBuilder enable(EnableType enable) {
             this.enable = enable;
             return this;
         }
