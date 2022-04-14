@@ -175,12 +175,12 @@ public class RedirectClientTest {
     }
 
 
-    // @Test
-    public void jwtAuthRuleDeleteTest() {
-        List<JwtRule> list = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").list();
+    @Test
+    public void redirectRuleDeleteTest() {
+        List<RedirectRule> list = orangeRestClient.redirect().rules("d08abe01-cfe0-43ec-ad69-f54d8d741f95").list();
         if (list.size() > 0) {
-            AcknowledgedResponse delete = orangeRestClient.jwtAuth()
-                    .rules("e2643937-f9be-4ee9-bda3-a931903a252b").delete(list.get(0).getId());
+            AcknowledgedResponse delete = orangeRestClient.redirect()
+                    .rules("d08abe01-cfe0-43ec-ad69-f54d8d741f95").delete(list.get(0).getId());
             System.out.println(delete.getMsg());
         }
     }
