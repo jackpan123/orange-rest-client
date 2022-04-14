@@ -47,6 +47,9 @@ public class RedirectRuleHandle {
         this.log = log;
     }
 
+    public RedirectRuleHandle() {
+    }
+
     RedirectRuleHandle(String url_tmpl, TrimQueryType trim_qs, RedirectStatus redirect_status, LogType log) {
         this.url_tmpl = url_tmpl;
         this.trim_qs = trim_qs.getFlag();

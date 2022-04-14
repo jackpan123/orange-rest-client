@@ -4,6 +4,8 @@ import com.jackpan.orange.constant.EnableType;
 import com.jackpan.orange.entity.SelectorRule;
 import lombok.Builder;
 
+import java.time.LocalDateTime;
+
 /**
  * 重定向验证规则
  * @author jackpan
@@ -40,6 +42,11 @@ public class RedirectRule {
      * 选择器ID
      */
     private String id;
+
+    /**
+     * 更新时间
+     */
+    private LocalDateTime time;
 
     public RedirectRule() {
     }
@@ -90,6 +97,14 @@ public class RedirectRule {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
     RedirectRule(String name, SelectorRule judge, ParamExtractor extractor, RedirectRuleHandle handle, EnableType enable, String id) {

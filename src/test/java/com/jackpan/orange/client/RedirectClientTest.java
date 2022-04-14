@@ -157,8 +157,8 @@ public class RedirectClientTest {
 
 
     @Test
-    public void jwtAuthRulesListTest() {
-        List<JwtRule> list = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").list();
+    public void redirectRulesListTest() {
+        List<RedirectRule> list = orangeRestClient.redirect().rules("d08abe01-cfe0-43ec-ad69-f54d8d741f95").list();
         System.out.println();
     }
 
