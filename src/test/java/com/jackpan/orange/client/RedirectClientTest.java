@@ -162,14 +162,14 @@ public class RedirectClientTest {
         System.out.println();
     }
 
-    // @Test
-    public void jwtAuthRulesUpdateTest() {
-        List<JwtRule> list = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").list();
+    @Test
+    public void redirectRulesUpdateTest() {
+        List<RedirectRule> list = orangeRestClient.redirect().rules("d08abe01-cfe0-43ec-ad69-f54d8d741f95").list();
         if (list.size() > 0) {
-            JwtRule rule = list.get(0);
+            RedirectRule rule = list.get(0);
             rule.setName("updateTest");
-            AcknowledgedResponse update = orangeRestClient.jwtAuth().rules("e2643937-f9be-4ee9-bda3-a931903a252b").update(rule);
-            System.out.println();
+            AcknowledgedResponse update = orangeRestClient.redirect().rules("d08abe01-cfe0-43ec-ad69-f54d8d741f95").update(rule);
+            System.out.println(update.getMsg());
 
         }
     }
